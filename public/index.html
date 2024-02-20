@@ -1,0 +1,211 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Email App</title>
+</head>
+
+<body>
+    <h1>Bulk Email App</h1>
+    <form action="http://localhost:5000/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx">
+        <button type="submit">Upload</button>
+    </form>
+</body>
+
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Email App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://agnitotechnologies.com/wp-content/uploads/2022/11/agnitotechnologies-logo.png"
+                alt="Agnito Technologies Logo">
+        </div>
+        <h1>Bulk Email App</h1>
+        <div id="uploadForm">
+            <form id="fileUploadForm" enctype="multipart/form-data">
+                <label for="file">Select Excel File:</label>
+                <input type="file" name="file" id="file" accept=".xlsx">
+                <br><br>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Intercept form submission
+            $('#fileUploadForm').submit(function (event) {
+                // Prevent default form submission
+                event.preventDefault();
+
+                // Create FormData object to store form data
+                var formData = new FormData($(this)[0]);
+
+                // AJAX call to submit form data
+                $.ajax({
+                    url: 'http://localhost:5000/upload',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        // Handle success response if needed
+                        console.log(response);
+                        // Clear the file input
+                        $('#file').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response if needed
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Email App</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Your CSS styles here */
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .logo img {
+            width: 200px;
+            /* Adjust the width as needed */
+        }
+
+        #uploadForm {
+            margin-top: 20px;
+        }
+
+        .success-message,
+        .error-message {
+            margin-top: 25px;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loader img {
+            width: 50px;
+            /* Adjust the width as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://agnitotechnologies.com/wp-content/uploads/2022/11/agnitotechnologies-logo.png"
+                alt="Agnito Technologies Logo">
+        </div>
+        <h1>Bulk Email App</h1>
+        <!-- Wrap the form in a div with ID -->
+        <div id="uploadForm">
+            <form id="fileUploadForm" enctype="multipart/form-data">
+                <label for="file">Select Excel File:</label>
+                <input type="file" name="file" id="file" accept=".xlsx">
+                <br><br>
+                <button type="submit">Upload</button>
+            </form>
+            <div class="loader">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif" alt="Loader">
+                <p>Loading...</p>
+            </div>
+            <div id="message" class="success-message" style="display:none;">Emails sent successfully!</div>
+            <div id="errorMessage" class="error-message" style="display:none;">Error processing file or sending emails.
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Intercept form submission
+            $('#fileUploadForm').submit(function (event) {
+                // Prevent default form submission
+                event.preventDefault();
+
+                // Hide success and error messages
+                $('#message, #errorMessage').hide();
+
+                // Show loader
+                $('.loader').show();
+
+                // Create FormData object to store form data
+                var formData = new FormData($(this)[0]);
+
+                // AJAX call to submit form data
+                $.ajax({
+                    url: 'http://159.223.51.198:5000/upload',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        // Handle success response if needed
+                        console.log(response);
+                        // Clear the file input
+                        $('#file').val('');
+                        // Hide loader
+                        $('.loader').hide();
+                        // Show success message
+                        $('#message').show();
+                        // Redirect to success page after 3 seconds
+                        setTimeout(function () {
+                            window.location.href = 'success.html';
+                        }, 3000);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response if needed
+                        console.error(xhr.responseText);
+                        // Hide loader
+                        $('.loader').hide();
+                        // Show error message
+                        $('#errorMessage').show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
